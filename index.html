@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Click Effect</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: white;
+            transition: background-color 0.5s ease;
+            overflow: hidden;
+        }
+        .heart-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .heart {
+            font-size: 100px;
+            color: red;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .heart:active {
+            transform: scale(1.1);
+        }
+        .heart::after {
+            content: "Click the heart";
+            font-size: 18px;
+            color: black;
+            position: absolute;
+            bottom: -30px;
+        }
+        .message-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 2s ease, transform 2s ease;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            width: 60%;
+            max-width: 500px;
+        }
+        .show-message-box {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .letter-content {
+            display: inline-block;
+            white-space: pre-wrap;
+            overflow: hidden;
+            border-right: 3px solid black;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+            color: black;
+            animation: typing 4s steps(50) forwards, blink 0.75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: black; }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart-container">
+        <div class="heart" onclick="changeBackground()">❤️</div>
+    </div>
+    
+    <div class="message-box">
+        <div class="letter-content" id="letter-text"></div>
+    </div>
+
+    <script>
+        function changeBackground() {
+            document.body.style.backgroundColor = "pink";
+            document.querySelector(".heart-container").classList.add("hidden");
+            setTimeout(() => {
+                document.querySelector(".message-box").classList.add("show-message-box");
+                typeMessage();
+            }, 500);
+        }
+        
+        function typeMessage() {
+            const message = "Dear Love \n\nHappy Valentine’s Day! 💖 I just wanted to take a moment to tell you how special you are. Every time I see you, my day instantly gets better, and I can’t help but smile. You have this amazing way of making everything feel a little brighter, and I truly admire that about you. I don’t know if you already have a Valentine, but if not, I’d love the chance to be that person. No pressure, just wanted you to know how much I appreciate you. Hope your day is as wonderful as you are! 💖";
+            const letter = document.getElementById("letter-text");
+            let index = 0;
+            function printLetter() {
+                if (index < message.length) {
+                    letter.textContent += message[index];
+                    index++;
+                    setTimeout(printLetter, 50);
+                }
+            }
+            printLetter();
+        }
+    </script>
+</body>
+</html>
